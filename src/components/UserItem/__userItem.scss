@@ -1,0 +1,18 @@
+.list-user {
+  .user-item {
+    padding: 0 10px 10px 0;
+
+    .ant-card-body {
+      .icon {
+        display: flex;
+        justify-content: end;
+        font-size: 2rem;
+        cursor: pointer;
+
+        .icon-edit {
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+}

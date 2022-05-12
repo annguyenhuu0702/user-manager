@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Nguyễn Hữu An",
+      "phoneNumber": "0384974745",
+      "sex": "male",
+      "address": "Quảng Trị"
+    },
+    {
+      "id": 2,
+      "name": "Nguyễn Văn B",
+      "phoneNumber": "0384974743",
+      "sex": "male",
+      "address": "Quảng Trị"
+    },
+    {
+      "id": 3,
+      "name": "Nguyễn Văn C",
+      "phoneNumber": "0384974742",
+      "sex": "female",
+      "address": "Thừa Thiên Huế"
+    },
+    {
+      "id": 4,
+      "name": "Nguyễn Văn D",
+      "phoneNumber": "0384974741",
+      "sex": "male",
+      "address": "Đà Nẵng"
+    },
+    {
+      "id": 5,
+      "name": "Nguyễn Văn E",
+      "phoneNumber": "0384974740",
+      "sex": "female",
+      "address": "Hồ Chí Minh"
+    }
+  ]
+}
