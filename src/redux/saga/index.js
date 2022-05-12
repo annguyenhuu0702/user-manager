@@ -12,6 +12,7 @@ import {
   fetchListUserSuccess,
   addUserSuccess,
   hideModal,
+  editUserSuccess,
 } from "../actions/index";
 import * as actionType from "../../constants/index";
 import * as userApi from "../../apis/user";
@@ -44,12 +45,29 @@ function* addUserSaga({ payload }) {
 
 function* editUserSaga({ payload }) {
   const { name, sex, phoneNumber, address } = payload;
+  const userEdit = yield select((state) => state.user.userEdit);
+  const res = yield call(
+    userApi.editUser,
+    {
+      name,
+      sex,
+      phoneNumber,
+      address,
+    },
+    userEdit.id
+  );
+  const { data, status } = res;
+  console.log(res);
+  if (status === actionType.STATUS_CODE.UPDATED) {
+    yield put(editUserSuccess(data));
+    yield put(hideModal());
+  }
 }
 
 function* rootSaga() {
   yield fork(watchFetchListUser);
-  yield takeLatest(actionType.ADD_USER_SUCCESS, addUserSaga);
-  yield takeLatest(actionType.EDIT_USER_SUCCESS, editUserSaga);
+  yield takeLatest(actionType.ADD_USER, addUserSaga);
+  yield takeLatest(actionType.EDIT_USER, editUserSaga);
   // yield all([call(onDeleteUser)]);
 }
 

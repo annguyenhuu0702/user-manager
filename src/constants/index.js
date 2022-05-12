@@ -6,6 +6,8 @@ export const STATUS_CODE = {
   UPDATED: 202,
 };
 
+export const LOADING = "LOADING";
+
 export const FETCH_LISTS = "FETCH_LISTS";
 export const FETCH_LISTS_SUCCESS = "FETCH_LISTS_SUCCESS";
 export const FETCH_LISTS_FAIL = "FETCH_LISTS_FAIL";

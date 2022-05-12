@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Modal, Form, Input } from "antd";
 import "./__modalUser.scss";
-import { addUserSuccess, hideModal, setUserEditing } from "../../redux/actions";
+import { addUser, hideModal, setUserEditing } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
+import { editUser } from "../../apis/user";
 
 const ModalUser = ({ openModal }) => {
   const title = useSelector((state) => state.modal.title);
@@ -16,15 +17,18 @@ const ModalUser = ({ openModal }) => {
     address: userEdit ? userEdit.phoneNumber : "",
   });
   const handleOk = () => {
-    dispatch(addUserSuccess(user));
-    dispatch(setUserEditing(null));
+    if (userEdit && userEdit.id) {
+      dispatch(editUser(userEdit, userEdit.id));
+    } else {
+      dispatch(addUser(user));
+      dispatch(setUserEditing(null));
+    }
     setUser({
       name: "",
       sex: "",
       phoneNumber: "",
       address: "",
     });
-    dispatch(hideModal());
   };
 
   const handleCancel = () => {

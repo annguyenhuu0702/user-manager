@@ -1,5 +1,12 @@
 import * as actionType from "../../constants/index";
 
+export const addUser = (user) => {
+  return {
+    type: actionType.ADD_USER,
+    payload: user,
+  };
+};
+
 export const addUserSuccess = (user) => {
   return {
     type: actionType.ADD_USER_SUCCESS,
@@ -14,10 +21,17 @@ export const setUserEditing = (user) => {
   };
 };
 
-export const editUserSuccess = (user) => {
+export const editUser = (user, userId) => {
+  return {
+    type: actionType.EDIT_USER,
+    payload: { user, userId },
+  };
+};
+
+export const editUserSuccess = (user, userId) => {
   return {
     type: actionType.EDIT_USER_SUCCESS,
-    payload: user,
+    payload: { user, userId },
   };
 };
 
@@ -58,26 +72,5 @@ export const changeModalTitle = (component) => {
   return {
     type: actionType.CHANGE_MODAL_TITLE,
     payload: component,
-  };
-};
-
-export const addUserSaga = (user) => {
-  return {
-    type: "ADD_USER_SAGA",
-    payload: user,
-  };
-};
-
-export const editUserSaga = (user) => {
-  return {
-    type: "EDIT_USER_SAGA",
-    payload: user,
-  };
-};
-
-export const deleteUserSaga = (user) => {
-  return {
-    type: actionType.DELETE_USER_SUCCESS,
-    payload: user,
   };
 };
