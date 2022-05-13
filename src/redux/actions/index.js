@@ -14,6 +14,20 @@ export const fetchListUserSuccess = (data) => {
   };
 };
 
+export const fetchTotalPage = (data) => {
+  return {
+    type: actionType.FETCH_TOTAL_PAGE,
+    payload: data,
+  };
+};
+
+export const fetchTotalPageSuccess = (data) => {
+  return {
+    type: actionType.FETCH_TOTAL_PAGE_SUCCESS,
+    payload: data,
+  };
+};
+
 export const addUser = (user) => {
   return {
     type: actionType.ADD_USER,
@@ -86,5 +100,12 @@ export const changeModalTitle = (component) => {
   return {
     type: actionType.CHANGE_MODAL_TITLE,
     payload: component,
+  };
+};
+
+export const changePage = (page) => {
+  return {
+    type: "CHANGE_PAGE",
+    payload: page,
   };
 };

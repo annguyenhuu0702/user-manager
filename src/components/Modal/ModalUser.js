@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Button, Checkbox } from "antd";
+import { Modal, Form, Input, Button } from "antd";
 import "./__modalUser.scss";
 import {
   addUser,
@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 const ModalUser = ({ openModal }) => {
   const title = useSelector((state) => state.modal.title);
   const userEdit = useSelector((state) => state.user.userEdit);
+  const allUser = useSelector((state) => state.user.allUser);
 
   const dispatch = useDispatch();
   const [user, setUser] = useState({
@@ -29,7 +30,9 @@ const ModalUser = ({ openModal }) => {
     if (userEdit && userEdit.id) {
       dispatch(editUser({ ...user, id: userEdit.id }));
     } else {
-      dispatch(addUser(user));
+      dispatch(
+        addUser({ user: user, page: allUser.page, limit: allUser.limit })
+      );
       dispatch(setUserEditing(null));
     }
   };

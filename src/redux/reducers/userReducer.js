@@ -3,6 +3,11 @@ import * as actionType from "../../constants/index";
 const initialState = {
   listUser: [],
   userEdit: null,
+  allUser: {
+    items: [],
+    limit: 5,
+    page: 1,
+  },
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,6 +17,26 @@ const userReducer = (state = initialState, action) => {
     case actionType.FETCH_LISTS_SUCCESS: {
       return { ...state, listUser: action.payload };
     }
+    case actionType.FETCH_TOTAL_PAGE: {
+      return { ...state };
+    }
+    case actionType.FETCH_TOTAL_PAGE_SUCCESS: {
+      const { data, limit } = action.payload;
+      return {
+        ...state,
+        allUser: {
+          ...state.allUser,
+          limit,
+          items: data,
+        },
+      };
+    }
+    case "CHANGE_PAGE": {
+      return {
+        ...state,
+        allUser: { ...state.allUser, page: action.payload },
+      };
+    }
     case actionType.ADD_USER:
       return {
         ...state,
@@ -19,7 +44,6 @@ const userReducer = (state = initialState, action) => {
     case actionType.ADD_USER_SUCCESS:
       return {
         ...state,
-        listUser: state.listUser.concat([action.payload]),
       };
     case actionType.SET_USER_EDITING:
       return {
@@ -34,7 +58,6 @@ const userReducer = (state = initialState, action) => {
 
     case actionType.EDIT_USER_SUCCESS:
       const data = action.payload;
-      console.log(data);
       const { listUser } = state;
       const index = listUser.findIndex((item) => item.id === data.id);
       if (index !== -1) {
@@ -58,11 +81,13 @@ const userReducer = (state = initialState, action) => {
       };
 
     case actionType.DELETE_USER_SUCCESS:
+      let newPage = state.allUser.page;
+      if (newPage !== 1 && (state.allUser.items.length - 1) % 5 === 0) {
+        newPage--;
+      }
       return {
         ...state,
-        listUser: [...state.listUser].filter(
-          (item) => item.id !== action.payload
-        ),
+        allUser: { ...state.allUser, page: newPage },
       };
     default:
       return state;

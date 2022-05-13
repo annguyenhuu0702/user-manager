@@ -2,6 +2,10 @@ import axiosService from "../config/index";
 import { API } from "../constants/index";
 const url = "users";
 
+export const getUsers = (page, limit) => {
+  return axiosService.get(`${API}/${url}?_page=${page}&_limit=${limit}`);
+};
+
 export const getAllUser = () => {
   return axiosService.get(`${API}/${url}`);
 };

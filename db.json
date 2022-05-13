@@ -1,11 +1,11 @@
 {
   "users": [
     {
-      "id": 3,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
+      "name": "Nguyễn Văn CD",
       "sex": "female",
-      "address": "Thừa Thiên Huế"
+      "phoneNumber": "0384974742",
+      "address": "Thừa Thiên Huế",
+      "id": 3
     },
     {
       "id": 4,
@@ -64,17 +64,10 @@
       "address": "Thừa Thiên Huế"
     },
     {
-      "id": 12,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
-      "sex": "female",
-      "address": "Thừa Thiên Huế"
-    },
-    {
       "name": "Áo Thun Nam Cổ Tròn Dáng Suông Classic",
-      "sex": "nam",
-      "phoneNumber": "034645132",
-      "address": "quảng trị",
+      "sex": "sads",
+      "phoneNumber": "0337867708",
+      "address": "Quảng Ngãi",
       "id": 13
     }
   ]

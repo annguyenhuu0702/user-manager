@@ -1,20 +1,26 @@
-import React, { useEffect } from "react";
+import { DownloadOutlined } from "@ant-design/icons";
+import { Button, Col, Pagination, Row } from "antd";
 import "antd/dist/antd.css";
-import { Button, Col, Row } from "antd";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as XLSX from "xlsx";
 import ModalUser from "./components/Modal/ModalUser";
 import UserItem from "./components/UserItem/UserItem";
-import "./__app.scss";
-import { useSelector, useDispatch } from "react-redux";
 import {
   changeModalTitle,
+  changePage,
   fetchListUser,
+  fetchTotalPage,
   setUserEditing,
   showModal,
 } from "./redux/actions/index";
+import "./__app.scss";
 
 function App() {
   const openModal = useSelector((state) => state.modal.openModal);
   const listUser = useSelector((state) => state.user.listUser);
+  const allUser = useSelector((state) => state.user.allUser);
+  const page = allUser.page;
 
   const dispatch = useDispatch();
 
@@ -24,9 +30,26 @@ function App() {
     dispatch(setUserEditing(null));
   };
 
+  const handlePagination = (_page) => {
+    dispatch(changePage(_page));
+  };
+
+  const handleExportExcel = () => {
+    let wb = XLSX.utils.book_new();
+    // object dùng json_to__sheet
+    // mảng dùng sheet_add_aoa
+    let ws = XLSX.utils.json_to_sheet(allUser.items);
+    XLSX.utils.book_append_sheet(wb, ws, "listUser");
+    XLSX.writeFile(wb, "listUser.xlsx");
+  };
+
   useEffect(() => {
-    dispatch(fetchListUser());
-  }, [dispatch]);
+    dispatch(fetchTotalPage({ limit: allUser.limit }));
+  }, [dispatch, allUser.limit]);
+
+  useEffect(() => {
+    dispatch(fetchListUser({ page: allUser.page, limit: allUser.limit }));
+  }, [allUser.limit, allUser.page, dispatch]);
 
   return (
     <>
@@ -39,7 +62,7 @@ function App() {
       </div>
       <div className="btn-add space">
         <Row>
-          <Col span={24}>
+          <Col span={12}>
             <Button
               size="large"
               type="primary"
@@ -50,6 +73,17 @@ function App() {
               Add new user
             </Button>
           </Col>
+          <Col span={12}>
+            <div className="export-excel">
+              <Button
+                type="primary"
+                icon={<DownloadOutlined />}
+                onClick={() => handleExportExcel()}
+              >
+                Excel
+              </Button>
+            </div>
+          </Col>
         </Row>
       </div>
       <div className="list-user space">
@@ -57,9 +91,17 @@ function App() {
       </div>
       {openModal && (
         <div className="modal-user">
-          <ModalUser openModal={openModal} />
+          <ModalUser openModal={openModal} page={page} />
         </div>
       )}
+      <div className="pagination space">
+        <Pagination
+          current={allUser.page}
+          pageSize={allUser.limit}
+          total={allUser.items.length}
+          onChange={handlePagination}
+        />
+      </div>
     </>
   );
 }

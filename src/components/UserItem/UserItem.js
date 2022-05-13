@@ -3,7 +3,7 @@ import { Popconfirm, Table, Space } from "antd";
 
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./__userItem.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   changeModalTitle,
   setUserEditing,
@@ -13,6 +13,7 @@ import {
 
 const UserItem = ({ listUser }) => {
   const dispatch = useDispatch();
+  const allUser = useSelector((state) => state.user.allUser);
 
   const handleEditModal = (item) => {
     dispatch(showModal());
@@ -21,7 +22,9 @@ const UserItem = ({ listUser }) => {
   };
 
   function confirm(item) {
-    dispatch(deleteUser(item.id));
+    dispatch(
+      deleteUser({ id: item.id, page: allUser.page, limit: allUser.limit })
+    );
   }
 
   const columns = [
@@ -74,15 +77,18 @@ const UserItem = ({ listUser }) => {
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={listUser.map((item) => {
-        return {
-          ...item,
-          key: item.id,
-        };
-      })}
-    />
+    <>
+      <Table
+        columns={columns}
+        pagination={false}
+        dataSource={listUser.map((item) => {
+          return {
+            ...item,
+            key: item.id,
+          };
+        })}
+      />
+    </>
   );
 };
 
