@@ -4,22 +4,22 @@ import {
   call,
   put,
   takeLatest,
-  all,
   takeEvery,
-  select,
+  all,
 } from "redux-saga/effects";
 import {
   fetchListUserSuccess,
   addUserSuccess,
   hideModal,
   editUserSuccess,
+  deleteUserSuccess,
 } from "../actions/index";
 import * as actionType from "../../constants/index";
 import * as userApi from "../../apis/user";
 
-function* watchFetchListUser() {
+function* fetchListUser() {
   while (true) {
-    yield take(actionType.FETCH_LISTS_SUCCESS);
+    yield take(actionType.FETCH_LISTS);
     const res = yield call(userApi.getAllUser);
     const { data, status } = res;
     if (status === actionType.STATUS_CODE.SUCCESS) {
@@ -29,13 +29,7 @@ function* watchFetchListUser() {
 }
 
 function* addUserSaga({ payload }) {
-  const { name, sex, phoneNumber, address } = payload;
-  const res = yield call(userApi.addUser, {
-    name,
-    sex,
-    phoneNumber,
-    address,
-  });
+  const res = yield call(userApi.addUser, payload);
   const { data, status } = res;
   if (status === actionType.STATUS_CODE.CREATED) {
     yield put(addUserSuccess(data));
@@ -44,31 +38,40 @@ function* addUserSaga({ payload }) {
 }
 
 function* editUserSaga({ payload }) {
-  const { name, sex, phoneNumber, address } = payload;
-  const userEdit = yield select((state) => state.user.userEdit);
-  const res = yield call(
-    userApi.editUser,
-    {
-      name,
-      sex,
-      phoneNumber,
-      address,
-    },
-    userEdit.id
-  );
+  const res = yield call(userApi.updateUser, payload);
   const { data, status } = res;
-  console.log(res);
-  if (status === actionType.STATUS_CODE.UPDATED) {
+  if (status === actionType.STATUS_CODE.SUCCESS) {
     yield put(editUserSuccess(data));
     yield put(hideModal());
   }
 }
 
+function* onDeleteUser() {
+  yield takeEvery(actionType.DELETE_USER, onDeleteUserSaga);
+}
+
+function* onDeleteUserSaga({ payload }) {
+  const res = yield call(userApi.deleteUser, payload);
+  const { status } = res;
+  if (status === actionType.STATUS_CODE.SUCCESS) {
+    yield put(deleteUserSuccess(payload));
+  }
+}
+
+// function* deleteUserSaga({ payload }) {
+//   const res = yield call(userApi.deleteUser, payload);
+//   const { status } = res;
+//   if (status === actionType.STATUS_CODE.SUCCESS) {
+//     yield put(deleteUserSuccess(payload));
+//   }
+// }
+
 function* rootSaga() {
-  yield fork(watchFetchListUser);
-  yield takeLatest(actionType.ADD_USER, addUserSaga);
+  yield fork(fetchListUser);
+  yield takeEvery(actionType.ADD_USER, addUserSaga);
   yield takeLatest(actionType.EDIT_USER, editUserSaga);
-  // yield all([call(onDeleteUser)]);
+  // yield takeLatest(actionType.DELETE_USER, deleteUserSaga);
+  yield all([call(onDeleteUser)]);
 }
 
 export default rootSaga;

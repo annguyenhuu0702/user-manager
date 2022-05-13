@@ -10,6 +10,10 @@ export const addUser = (data) => {
   return axiosService.post(`${API}/${url}`, data);
 };
 
-export const editUser = (user, userId) => {
-  return axiosService.put(`${API}/${url}/${userId}`, user);
+export const updateUser = (user) => {
+  return axiosService.put(`${API}/${url}/${user.id}`, user);
+};
+
+export const deleteUser = (id) => {
+  return axiosService.delete(`${API}/${url}/${id}`);
 };

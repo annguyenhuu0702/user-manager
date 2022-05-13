@@ -6,6 +6,9 @@ const initialState = {
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionType.FETCH_LISTS: {
+      return { ...state };
+    }
     case actionType.FETCH_LISTS_SUCCESS: {
       return { ...state, listUser: action.payload };
     }
@@ -30,16 +33,15 @@ const userReducer = (state = initialState, action) => {
       };
 
     case actionType.EDIT_USER_SUCCESS:
-      const { data } = action.payload;
-
+      const data = action.payload;
+      console.log(data);
       const { listUser } = state;
-      const index = listUser.findIndex((item) => item.id === data);
+      const index = listUser.findIndex((item) => item.id === data.id);
       if (index !== -1) {
-      } else {
         const newListUser = [
           ...listUser.slice(0, index),
           data,
-          ...listUser.slice(0, index + 1),
+          ...listUser.slice(index + 1, listUser.length),
         ];
         return {
           ...state,
@@ -50,11 +52,18 @@ const userReducer = (state = initialState, action) => {
         ...state,
       };
 
+    case actionType.DELETE_USER:
+      return {
+        ...state,
+      };
+
     case actionType.DELETE_USER_SUCCESS:
-      state.listUser = state.listUser.filter(
-        (item) => item.id !== action.payload
-      );
-      return { ...state };
+      return {
+        ...state,
+        listUser: [...state.listUser].filter(
+          (item) => item.id !== action.payload
+        ),
+      };
     default:
       return state;
   }

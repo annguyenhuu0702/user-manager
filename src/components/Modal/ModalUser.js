@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import { Modal, Form, Input } from "antd";
+import { Modal, Form, Input, Button, Checkbox } from "antd";
 import "./__modalUser.scss";
-import { addUser, hideModal, setUserEditing } from "../../redux/actions";
+import {
+  addUser,
+  hideModal,
+  setUserEditing,
+  editUser,
+} from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser } from "../../apis/user";
 
 const ModalUser = ({ openModal }) => {
   const title = useSelector((state) => state.modal.title);
@@ -14,69 +18,101 @@ const ModalUser = ({ openModal }) => {
     name: userEdit ? userEdit.name : "",
     sex: userEdit ? userEdit.sex : "",
     phoneNumber: userEdit ? userEdit.phoneNumber : "",
-    address: userEdit ? userEdit.phoneNumber : "",
+    address: userEdit ? userEdit.address : "",
   });
-  const handleOk = () => {
-    if (userEdit && userEdit.id) {
-      dispatch(editUser(userEdit, userEdit.id));
-    } else {
-      dispatch(addUser(user));
-      dispatch(setUserEditing(null));
-    }
-    setUser({
-      name: "",
-      sex: "",
-      phoneNumber: "",
-      address: "",
-    });
-  };
 
   const handleCancel = () => {
     dispatch(hideModal());
   };
 
+  const onFinish = () => {
+    if (userEdit && userEdit.id) {
+      dispatch(editUser({ ...user, id: userEdit.id }));
+    } else {
+      dispatch(addUser(user));
+      dispatch(setUserEditing(null));
+    }
+  };
   return (
-    <>
-      <Modal
-        title={title}
-        visible={openModal}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Form>
-          <Form.Item label="Name">
-            <Input
-              placeholder="Please enter your name"
-              value={user.name}
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
-            />
-          </Form.Item>
-          <Form.Item label="Sex">
-            <Input
-              placeholder="Please enter your sex"
-              value={user.sex}
-              onChange={(e) => setUser({ ...user, sex: e.target.value })}
-            />
-          </Form.Item>
-          <Form.Item label="Phone number">
-            <Input
-              placeholder="Please enter your phone number"
-              value={user.phoneNumber}
-              onChange={(e) =>
-                setUser({ ...user, phoneNumber: e.target.value })
-              }
-            />
-          </Form.Item>
-          <Form.Item label="Address">
-            <Input
-              placeholder="Please enter your address"
-              value={user.address}
-              onChange={(e) => setUser({ ...user, address: e.target.value })}
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
-    </>
+    <Modal
+      onCancel={() => handleCancel()}
+      title={title}
+      visible={openModal}
+      footer={[]}
+    >
+      <Form onFinish={onFinish} labelCol={{ span: 6 }} initialValues={user}>
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input
+            placeholder="Please enter your name"
+            value={user.name}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Sex"
+          name="sex"
+          rules={[
+            {
+              required: true,
+              message: "Please input your sex!",
+            },
+          ]}
+        >
+          <Input
+            placeholder="Please enter your sex"
+            value={user.sex}
+            onChange={(e) => setUser({ ...user, sex: e.target.value })}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Phone number"
+          name="phoneNumber"
+          rules={[
+            {
+              required: true,
+              message: "Please input your phone number!",
+            },
+          ]}
+        >
+          <Input
+            placeholder="Please enter your address"
+            value={user.phoneNumber}
+            onChange={(e) => setUser({ ...user, phoneNumber: e.target.value })}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Address"
+          name="address"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
+            },
+          ]}
+        >
+          <Input
+            placeholder="Please enter your address"
+            value={user.address}
+            onChange={(e) => setUser({ ...user, address: e.target.value })}
+          />
+        </Form.Item>
+        <Button key="back" onClick={() => handleCancel()}>
+          Cancel
+        </Button>
+        <Button type="primary" htmlType="submit">
+          Save
+        </Button>
+      </Form>
+    </Modal>
   );
 };
 

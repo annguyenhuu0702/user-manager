@@ -1,5 +1,19 @@
 import * as actionType from "../../constants/index";
 
+export const fetchListUser = (data) => {
+  return {
+    type: actionType.FETCH_LISTS,
+    payload: data,
+  };
+};
+
+export const fetchListUserSuccess = (data) => {
+  return {
+    type: actionType.FETCH_LISTS_SUCCESS,
+    payload: data,
+  };
+};
+
 export const addUser = (user) => {
   return {
     type: actionType.ADD_USER,
@@ -21,17 +35,24 @@ export const setUserEditing = (user) => {
   };
 };
 
-export const editUser = (user, userId) => {
+export const editUser = (user) => {
   return {
     type: actionType.EDIT_USER,
-    payload: { user, userId },
+    payload: user,
   };
 };
 
-export const editUserSuccess = (user, userId) => {
+export const editUserSuccess = (user) => {
   return {
     type: actionType.EDIT_USER_SUCCESS,
-    payload: { user, userId },
+    payload: user,
+  };
+};
+
+export const deleteUser = (id) => {
+  return {
+    type: actionType.DELETE_USER,
+    payload: id,
   };
 };
 
@@ -39,13 +60,6 @@ export const deleteUserSuccess = (id) => {
   return {
     type: actionType.DELETE_USER_SUCCESS,
     payload: id,
-  };
-};
-
-export const fetchListUserSuccess = (data) => {
-  return {
-    type: actionType.FETCH_LISTS_SUCCESS,
-    payload: data,
   };
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
-import { Row, Col, Card } from "antd";
+import { Popconfirm, Table, Space } from "antd";
+
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./__userItem.scss";
 import { useDispatch } from "react-redux";
@@ -7,61 +8,81 @@ import {
   changeModalTitle,
   setUserEditing,
   showModal,
+  deleteUser,
 } from "../../redux/actions";
 
 const UserItem = ({ listUser }) => {
   const dispatch = useDispatch();
 
-  const handleDelete = (id) => {
-    console.log(id);
-  };
-
   const handleEditModal = (item) => {
     dispatch(showModal());
     dispatch(changeModalTitle("Edit user"));
     dispatch(setUserEditing(item));
-    // console.log(item);
   };
-  return (
-    <Row>
-      {listUser &&
-        listUser.map((item) => {
-          return (
-            <Col
-              xs={12}
-              md={8}
-              lg={6}
-              className="user-item"
-              key={Math.random()}
+
+  function confirm(item) {
+    dispatch(deleteUser(item.id));
+  }
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Sex",
+      dataIndex: "sex",
+      key: "sex",
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+
+    {
+      title: "Action",
+      key: "action",
+      render: (item) => {
+        return (
+          <Space size="middle">
+            <EditOutlined
+              onClick={() => {
+                handleEditModal(item);
+              }}
+            />
+            <Popconfirm
+              title={`Are you sure to delete user ${item.name}?`}
+              onConfirm={() => {
+                confirm(item);
+              }}
+              okText="Yes"
+              cancelText="No"
             >
-              <Card>
-                <p>Name: {item.name}</p>
-                <p>Sex: {item.sex}</p>
-                <p>Phone number: {item.phoneNumber} </p>
-                <p>Address: {item.address}</p>
-                <div className="icon">
-                  <div
-                    className="icon-edit"
-                    onClick={() => {
-                      handleEditModal(item);
-                    }}
-                  >
-                    <EditOutlined />
-                  </div>
-                  <div
-                    className="icon-delete"
-                    onClick={() => {
-                      handleDelete(item.id);
-                    }}
-                  >
-                    <DeleteOutlined />
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          );
-        })}
-    </Row>
+              <DeleteOutlined />
+            </Popconfirm>
+          </Space>
+        );
+      },
+    },
+  ];
+
+  return (
+    <Table
+      columns={columns}
+      dataSource={listUser.map((item) => {
+        return {
+          ...item,
+          key: item.id,
+        };
+      })}
+    />
   );
 };
 

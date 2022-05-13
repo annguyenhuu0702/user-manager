@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "antd/dist/antd.css";
 import { Button, Col, Row } from "antd";
 import ModalUser from "./components/Modal/ModalUser";
@@ -7,7 +7,7 @@ import "./__app.scss";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeModalTitle,
-  fetchListUserSuccess,
+  fetchListUser,
   setUserEditing,
   showModal,
 } from "./redux/actions/index";
@@ -25,7 +25,7 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch(fetchListUserSuccess());
+    dispatch(fetchListUser());
   }, [dispatch]);
 
   return (
