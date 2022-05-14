@@ -36,11 +36,11 @@
       "address": "Thừa Thiên Huế"
     },
     {
-      "id": 8,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
+      "name": "Nguyễn Văn D1",
       "sex": "female",
-      "address": "Thừa Thiên Huế"
+      "phoneNumber": "0384974742",
+      "address": "Thừa Thiên Huế",
+      "id": 8
     },
     {
       "id": 9,
@@ -50,11 +50,11 @@
       "address": "Thừa Thiên Huế"
     },
     {
-      "id": 10,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
+      "name": "Nguyễn Văn A",
       "sex": "female",
-      "address": "Thừa Thiên Huế"
+      "phoneNumber": "0384974742",
+      "address": "Thừa Thiên Huế",
+      "id": 10
     },
     {
       "id": 11,
@@ -69,6 +69,13 @@
       "phoneNumber": "0337867708",
       "address": "Quảng Ngãi",
       "id": 13
+    },
+    {
+      "name": "học reactJs 1",
+      "sex": "nam",
+      "phoneNumber": "0337867708",
+      "address": "Quảng Ngãi",
+      "id": 14
     }
   ]
 }

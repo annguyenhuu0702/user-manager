@@ -108,12 +108,18 @@ const ModalUser = ({ openModal }) => {
             onChange={(e) => setUser({ ...user, address: e.target.value })}
           />
         </Form.Item>
-        <Button key="back" onClick={() => handleCancel()}>
-          Cancel
-        </Button>
-        <Button type="primary" htmlType="submit">
-          Save
-        </Button>
+        <div className="modal-btn">
+          <Button
+            key="back"
+            onClick={() => handleCancel()}
+            style={{ marginRight: "10px" }}
+          >
+            Cancel
+          </Button>
+          <Button type="primary" htmlType="submit">
+            Save
+          </Button>
+        </div>
       </Form>
     </Modal>
   );
