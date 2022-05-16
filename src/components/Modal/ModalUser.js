@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Button } from "antd";
+import { Modal, Form, Input, Button, Radio } from "antd";
 import "./__modalUser.scss";
 import {
   addUser,
@@ -17,7 +17,7 @@ const ModalUser = ({ openModal }) => {
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     name: userEdit ? userEdit.name : "",
-    sex: userEdit ? userEdit.sex : "",
+    sex: userEdit ? userEdit.sex : "Male",
     phoneNumber: userEdit ? userEdit.phoneNumber : "",
     address: userEdit ? userEdit.address : "",
   });
@@ -70,11 +70,18 @@ const ModalUser = ({ openModal }) => {
             },
           ]}
         >
-          <Input
+          {/* <Input
             placeholder="Please enter your sex"
             value={user.sex}
             onChange={(e) => setUser({ ...user, sex: e.target.value })}
-          />
+          /> */}
+          <Radio.Group
+            onChange={(e) => setUser({ ...user, sex: e.target.value })}
+            value={user.sex}
+          >
+            <Radio value="Male">Male</Radio>
+            <Radio value="Female">Female</Radio>
+          </Radio.Group>
         </Form.Item>
         <Form.Item
           label="Phone number"

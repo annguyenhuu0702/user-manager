@@ -12,13 +12,13 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.FETCH_LISTS: {
-      return { ...state };
+      return state;
     }
     case actionType.FETCH_LISTS_SUCCESS: {
       return { ...state, listUser: action.payload };
     }
     case actionType.FETCH_TOTAL_PAGE: {
-      return { ...state };
+      return state;
     }
     case actionType.FETCH_TOTAL_PAGE_SUCCESS: {
       const { data, limit } = action.payload;
@@ -31,20 +31,17 @@ const userReducer = (state = initialState, action) => {
         },
       };
     }
-    case "CHANGE_PAGE": {
+    case actionType.CHANGE_PAGE: {
       return {
         ...state,
         allUser: { ...state.allUser, page: action.payload },
       };
     }
     case actionType.ADD_USER:
-      return {
-        ...state,
-      };
+      return state;
+
     case actionType.ADD_USER_SUCCESS:
-      return {
-        ...state,
-      };
+      return state;
     case actionType.SET_USER_EDITING:
       return {
         ...state,
@@ -52,9 +49,7 @@ const userReducer = (state = initialState, action) => {
       };
 
     case actionType.EDIT_USER:
-      return {
-        ...state,
-      };
+      return state;
 
     case actionType.EDIT_USER_SUCCESS:
       const data = action.payload;
@@ -76,9 +71,7 @@ const userReducer = (state = initialState, action) => {
       };
 
     case actionType.DELETE_USER:
-      return {
-        ...state,
-      };
+      return state;
 
     case actionType.DELETE_USER_SUCCESS:
       let newPage = state.allUser.page;

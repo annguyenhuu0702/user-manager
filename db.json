@@ -1,11 +1,11 @@
 {
   "users": [
     {
+      "id": 3,
       "name": "Nguyễn Văn CD",
       "sex": "female",
       "phoneNumber": "0384974742",
-      "address": "Thừa Thiên Huế",
-      "id": 3
+      "address": "Thừa Thiên Huế"
     },
     {
       "id": 4,
@@ -36,11 +36,11 @@
       "address": "Thừa Thiên Huế"
     },
     {
+      "id": 8,
       "name": "Nguyễn Văn D1",
       "sex": "female",
       "phoneNumber": "0384974742",
-      "address": "Thừa Thiên Huế",
-      "id": 8
+      "address": "Thừa Thiên Huế"
     },
     {
       "id": 9,
@@ -50,11 +50,11 @@
       "address": "Thừa Thiên Huế"
     },
     {
+      "id": 10,
       "name": "Nguyễn Văn A",
       "sex": "female",
       "phoneNumber": "0384974742",
-      "address": "Thừa Thiên Huế",
-      "id": 10
+      "address": "Thừa Thiên Huế"
     },
     {
       "id": 11,
@@ -64,18 +64,46 @@
       "address": "Thừa Thiên Huế"
     },
     {
+      "id": 13,
       "name": "Áo Thun Nam Cổ Tròn Dáng Suông Classic",
       "sex": "sads",
       "phoneNumber": "0337867708",
-      "address": "Quảng Ngãi",
-      "id": 13
+      "address": "Quảng Ngãi"
     },
     {
-      "name": "học reactJs 1",
-      "sex": "nam",
+      "name": "ao that day",
+      "sex": "sads",
       "phoneNumber": "0337867708",
       "address": "Quảng Ngãi",
       "id": 14
+    },
+    {
+      "name": "chơi game",
+      "sex": "Male",
+      "phoneNumber": "0384974745",
+      "address": "quảng trị",
+      "id": 15
+    },
+    {
+      "name": "học reactJs 1",
+      "sex": "Female",
+      "phoneNumber": "0384974745",
+      "address": "Quảng Ngãi",
+      "id": 16
+    },
+    {
+      "name": "học reactJs 1cdd",
+      "sex": "Male",
+      "phoneNumber": "0384974723",
+      "address": "quảng trị",
+      "id": 17
+    },
+    {
+      "name": "học reactJs 1fsdfd",
+      "sex": "Male",
+      "phoneNumber": "0384974745",
+      "address": "Quảng Ngãi",
+      "id": 18
     }
   ]
 }
