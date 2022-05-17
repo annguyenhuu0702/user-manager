@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const ModalUser = ({ openModal }) => {
   const [openModalAddNote, setOpenModalAddNote] = useState(false);
-  const [addNote, setAddNote] = useState("");
   const title = useSelector((state) => state.modal.title);
   const userEdit = useSelector((state) => state.user.userEdit);
   const allUser = useSelector((state) => state.user.allUser);
@@ -26,7 +25,8 @@ const ModalUser = ({ openModal }) => {
     address: userEdit ? userEdit.address : "",
     note: userEdit ? userEdit.note : "",
   });
-  console.log(addNote);
+
+  const [addNote, setAddNote] = useState(userEdit ? userEdit.note : "");
 
   const handleCancel = () => {
     dispatch(hideModal());
@@ -43,7 +43,7 @@ const ModalUser = ({ openModal }) => {
     }
   };
 
-  const handleSubmitAddNote = (e) => {
+  const handleSubmitAddNote = () => {
     setUser({
       ...user,
       note: addNote,
@@ -119,40 +119,53 @@ const ModalUser = ({ openModal }) => {
               onChange={(e) => setUser({ ...user, address: e.target.value })}
             />
           </Form.Item>
+          <Row>
+            <Col lg={6}>
+              {!userEdit && (
+                <div>
+                  <Button
+                    type="primary"
+                    style={{ marginRight: "10px", marginBottom: "10px" }}
+                    onClick={() => {
+                      setOpenModalAddNote(true);
+                    }}
+                  >
+                    Add note
+                  </Button>
+                </div>
+              )}
+              {userEdit && (
+                <div>
+                  <Button
+                    type="primary"
+                    style={{ marginRight: "10px" }}
+                    onClick={() => {
+                      setOpenModalAddNote(true);
+                    }}
+                  >
+                    Edit note
+                  </Button>
+                </div>
+              )}
+            </Col>
+            <Col lg={18}>
+              {/* modal lớn */}
+              <Form.Item
+                name="note"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your comment!",
+                  },
+                ]}
+              >
+                <>
+                  <TextArea rows={4} value={user.note} readOnly />
+                </>
+              </Form.Item>
+            </Col>
+          </Row>
 
-          <Button
-            type="primary"
-            style={{ marginRight: "10px" }}
-            onClick={() => {
-              setOpenModalAddNote(true);
-            }}
-          >
-            Add note
-          </Button>
-
-          <Form.Item
-            name="note"
-            rules={[
-              {
-                required: true,
-                message: "Please input your comment!",
-              },
-            ]}
-          >
-            <>
-              <TextArea
-                rows={4}
-                value={user.note}
-                onChange={(e) => {
-                  setUser({
-                    ...user,
-                    note: e.target.value,
-                  });
-                }}
-              />
-            </>
-          </Form.Item>
-          <br />
           <div className="modal-btn">
             <Button
               key="back"
@@ -167,9 +180,10 @@ const ModalUser = ({ openModal }) => {
           </div>
         </Form>
       </Modal>
+      {/* modal con */}
       {openModalAddNote && (
         <Modal
-          title="Add note"
+          title={userEdit ? "Edit note" : "Add Note"}
           visible={openModalAddNote}
           footer={[]}
           onCancel={() => {
@@ -177,21 +191,21 @@ const ModalUser = ({ openModal }) => {
           }}
         >
           <Form
-            onFinish={(e) => {
-              handleSubmitAddNote(e);
+            onFinish={() => {
+              handleSubmitAddNote();
             }}
             labelCol={{ span: 6 }}
             initialValues={{ addNote: addNote }}
           >
             <Form.Item
-              label="Add note"
+              label={userEdit ? "Edit note" : "Add Note"}
               name="addNote"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: "Please input your add note!",
-              //   },
-              // ]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your add note!",
+                },
+              ]}
             >
               <TextArea
                 placeholder="Please enter your comment"
