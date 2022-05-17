@@ -1,109 +1,28 @@
 {
   "users": [
     {
-      "id": 3,
-      "name": "Nguyễn Văn CD",
-      "sex": "female",
-      "phoneNumber": "0384974742",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 4,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
-      "sex": "female",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 5,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
-      "sex": "female",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 6,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
-      "sex": "female",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 7,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
-      "sex": "female",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 8,
-      "name": "Nguyễn Văn D1",
-      "sex": "female",
-      "phoneNumber": "0384974742",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 9,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
-      "sex": "female",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 10,
-      "name": "Nguyễn Văn A",
-      "sex": "female",
-      "phoneNumber": "0384974742",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 11,
-      "name": "Nguyễn Văn C",
-      "phoneNumber": "0384974742",
-      "sex": "female",
-      "address": "Thừa Thiên Huế"
-    },
-    {
-      "id": 13,
-      "name": "Áo Thun Nam Cổ Tròn Dáng Suông Classic",
-      "sex": "sads",
+      "name": "ao that day",
+      "sex": "Male",
       "phoneNumber": "0337867708",
-      "address": "Quảng Ngãi"
+      "address": "Quảng Ngãi",
+      "note": "abc",
+      "id": 1
     },
     {
       "name": "ao that day",
-      "sex": "sads",
+      "sex": "Male",
       "phoneNumber": "0337867708",
       "address": "Quảng Ngãi",
-      "id": 14
+      "note": "123",
+      "id": 2
     },
     {
-      "name": "chơi game",
-      "sex": "Male",
-      "phoneNumber": "0384974745",
-      "address": "quảng trị",
-      "id": 15
-    },
-    {
-      "name": "học reactJs 1",
+      "name": "ao that day 123",
       "sex": "Female",
       "phoneNumber": "0384974745",
       "address": "Quảng Ngãi",
-      "id": 16
-    },
-    {
-      "name": "học reactJs 1cdd",
-      "sex": "Male",
-      "phoneNumber": "0384974723",
-      "address": "quảng trị",
-      "id": 17
-    },
-    {
-      "name": "học reactJs 1fsdfd",
-      "sex": "Male",
-      "phoneNumber": "0384974745",
-      "address": "Quảng Ngãi",
-      "id": 18
+      "note": "1234",
+      "id": 3
     }
   ]
 }

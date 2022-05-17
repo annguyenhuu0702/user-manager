@@ -48,6 +48,11 @@ const UserItem = ({ listUser }) => {
       dataIndex: "address",
       key: "address",
     },
+    {
+      title: "Note",
+      dataIndex: "note",
+      key: "note",
+    },
 
     {
       title: "Action",

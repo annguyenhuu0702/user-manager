@@ -6,5 +6,10 @@
   .modal-btn {
     display: flex;
     justify-content: flex-end;
+    margin-top: 16px;
+  }
+
+  .ant-modal-footer {
+    border-top: none;
   }
 }
