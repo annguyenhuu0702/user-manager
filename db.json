@@ -1,44 +1,28 @@
 {
   "users": [
     {
-      "name": "ao that day",
+      "name": "Nguyễn Hữu An",
       "sex": "Male",
-      "phoneNumber": "0337867708",
-      "address": "Quảng Ngãi",
-      "note": "1",
+      "phoneNumber": "0384974745",
+      "address": "quảng trị",
+      "note": "1,2",
       "id": 1
     },
     {
-      "name": "ao that day 123",
+      "name": "Nguyễn Hữu B",
       "sex": "Female",
-      "phoneNumber": "0384974745",
-      "address": "Quảng Ngãi",
-      "note": "trà sữa",
-      "id": 3
-    },
-    {
-      "name": "Phan Khánh Duy",
-      "sex": "Female",
-      "phoneNumber": "0384974745",
-      "address": "long an",
-      "note": "123",
-      "id": 4
-    },
-    {
-      "name": "Áo Thun Nam Cổ Tròn Dáng Suông Classic",
-      "sex": "Male",
-      "phoneNumber": "0384974723",
+      "phoneNumber": "0965480997",
       "address": "Nam Định",
-      "note": "12344567",
-      "id": 5
+      "note": "a",
+      "id": 2
     },
     {
-      "name": "chơi game",
+      "name": "học reactJs 1",
       "sex": "Male",
       "phoneNumber": "0384974723",
-      "address": "quảng trị",
-      "note": "1",
-      "id": 6
+      "address": "Quảng Ngãi",
+      "note": "1,2,3",
+      "id": 3
     }
   ]
 }

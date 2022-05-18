@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Button, Radio, Row, Col } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Button,
+  Radio,
+  Table,
+  Row,
+  Col,
+  Space,
+} from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./__modalUser.scss";
 import {
   addUser,
@@ -10,14 +21,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const ModalUser = ({ openModal }) => {
-  const [openModalAddNote, setOpenModalAddNote] = useState(false);
   const title = useSelector((state) => state.modal.title);
   const userEdit = useSelector((state) => state.user.userEdit);
   const allUser = useSelector((state) => state.user.allUser);
 
-  const { TextArea } = Input;
-
-  const dispatch = useDispatch();
   const [user, setUser] = useState({
     name: userEdit ? userEdit.name : "",
     sex: userEdit ? userEdit.sex : "Male",
@@ -26,7 +33,65 @@ const ModalUser = ({ openModal }) => {
     note: userEdit ? userEdit.note : "",
   });
 
-  const [addNote, setAddNote] = useState(userEdit ? userEdit.note : "");
+  const [modalChild, setModalChild] = useState({
+    open: false,
+    item: null,
+  });
+  const [addNote, setAddNote] = useState("");
+
+  const [dataSource, setDataSource] = useState([]);
+
+  const splitNote = (note) => {
+    let result = [];
+    let _splitNote = note.split(",");
+    if (_splitNote.length > 0) {
+      result = _splitNote.map((item, index) => ({
+        key: index,
+        content: item,
+      }));
+      return result;
+    }
+    return result;
+  };
+
+  const renderNote = () => {
+    let result = "";
+    dataSource.forEach((item, index) => {
+      if (index === 0) {
+        result += item.content;
+      } else {
+        result += "," + item.content;
+      }
+    });
+    return result;
+  };
+
+  const columns = [
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (text, record) => {
+        return (
+          <Space size="middle">
+            <EditOutlined
+              onClick={() => {
+                setModalChild({ open: true, item: record });
+              }}
+            />
+            <DeleteOutlined />
+          </Space>
+        );
+      },
+    },
+  ];
+
+  const dispatch = useDispatch();
 
   const handleCancel = () => {
     dispatch(hideModal());
@@ -34,21 +99,41 @@ const ModalUser = ({ openModal }) => {
 
   const onFinish = () => {
     if (userEdit && userEdit.id) {
-      dispatch(editUser({ ...user, id: userEdit.id }));
+      dispatch(
+        editUser({
+          ...user,
+          id: userEdit.id,
+          note: splitNote(user.note),
+        })
+      );
     } else {
       dispatch(
-        addUser({ user: user, page: allUser.page, limit: allUser.limit })
+        addUser({
+          user: {
+            ...user,
+            note: renderNote(),
+          },
+          page: allUser.page,
+          limit: allUser.limit,
+        })
       );
       dispatch(setUserEditing(null));
     }
   };
 
-  const handleSubmitAddNote = () => {
-    setUser({
-      ...user,
-      note: addNote,
-    });
-    setOpenModalAddNote(false);
+  const handleAddNote = () => {
+    if (modalChild.item) {
+      let newDataSource = [...userEdit.note];
+      let index = dataSource.findIndex(
+        (item) => item.key === modalChild.item.key
+      );
+      if (index !== -1) {
+        newDataSource[index].content = addNote;
+      }
+    } else {
+      setDataSource([...dataSource, { content: addNote }]);
+    }
+    setModalChild({ open: false, item: null });
   };
 
   return (
@@ -119,52 +204,27 @@ const ModalUser = ({ openModal }) => {
               onChange={(e) => setUser({ ...user, address: e.target.value })}
             />
           </Form.Item>
-          <Row>
-            <Col lg={6}>
-              {!userEdit && (
-                <div>
-                  <Button
-                    type="primary"
-                    style={{ marginRight: "10px", marginBottom: "10px" }}
-                    onClick={() => {
-                      setOpenModalAddNote(true);
-                    }}
-                  >
-                    Add note
-                  </Button>
-                </div>
-              )}
-              {userEdit && (
-                <div>
-                  <Button
-                    type="primary"
-                    style={{ marginRight: "10px" }}
-                    onClick={() => {
-                      setOpenModalAddNote(true);
-                    }}
-                  >
-                    Edit note
-                  </Button>
-                </div>
-              )}
-            </Col>
-            <Col lg={18}>
-              {/* modal lớn */}
-              <Form.Item
-                name="note"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your comment!",
-                  },
-                ]}
-              >
-                <>
-                  <TextArea rows={4} value={user.note} readOnly />
-                </>
-              </Form.Item>
-            </Col>
-          </Row>
+          <Form.Item>
+            <Row>
+              <Col lg={6} md={6}>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    setModalChild({ open: true, item: null });
+                  }}
+                >
+                  Add note
+                </Button>
+              </Col>
+              <Col lg={18} md={18}>
+                <Table
+                  dataSource={userEdit ? splitNote(userEdit.note) : dataSource}
+                  columns={columns}
+                  pagination={false}
+                />
+              </Col>
+            </Row>
+          </Form.Item>
 
           <div className="modal-btn">
             <Button
@@ -180,46 +240,47 @@ const ModalUser = ({ openModal }) => {
           </div>
         </Form>
       </Modal>
-      {/* modal con */}
-      {openModalAddNote && (
+      {modalChild.open && (
         <Modal
-          title={userEdit ? "Edit note" : "Add Note"}
-          visible={openModalAddNote}
-          footer={[]}
+          title={modalChild.item ? "Edit note" : "Add note"}
+          visible={modalChild.open}
           onCancel={() => {
-            setOpenModalAddNote(false);
+            setModalChild({ open: false, item: null });
           }}
+          onOk={() => {
+            handleAddNote();
+          }}
+          footer={[]}
         >
           <Form
-            onFinish={() => {
-              handleSubmitAddNote();
+            onFinish={() => handleAddNote()}
+            initialValues={{
+              addNote: modalChild.item ? modalChild.item.content : addNote,
             }}
-            labelCol={{ span: 6 }}
-            initialValues={{ addNote: addNote }}
           >
             <Form.Item
-              label={userEdit ? "Edit note" : "Add Note"}
+              label={modalChild.item ? "Edit note" : "Add note"}
               name="addNote"
               rules={[
                 {
                   required: true,
-                  message: "Please input your add note!",
+                  message: "Please input your address!",
                 },
               ]}
             >
-              <TextArea
-                placeholder="Please enter your comment"
-                rows={4}
+              <Input.TextArea
                 value={addNote}
+                name="addNote"
                 onChange={(e) => {
                   setAddNote(e.target.value);
                 }}
+                placeholder="Please enter your comment"
               />
             </Form.Item>
             <div className="modal-btn">
               <Button
                 key="back"
-                onClick={() => setOpenModalAddNote(false)}
+                onClick={() => setModalChild({ open: false, item: null })}
                 style={{ marginRight: "10px" }}
               >
                 Cancel
@@ -229,7 +290,6 @@ const ModalUser = ({ openModal }) => {
               </Button>
             </div>
           </Form>
-          <br />
         </Modal>
       )}
     </>

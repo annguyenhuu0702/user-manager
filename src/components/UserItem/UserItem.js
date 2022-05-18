@@ -53,7 +53,6 @@ const UserItem = ({ listUser }) => {
       dataIndex: "note",
       key: "note",
     },
-
     {
       title: "Action",
       key: "action",
