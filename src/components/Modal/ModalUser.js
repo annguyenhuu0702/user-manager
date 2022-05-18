@@ -30,7 +30,7 @@ const ModalUser = ({ openModal }) => {
     sex: userEdit ? userEdit.sex : "Male",
     phoneNumber: userEdit ? userEdit.phoneNumber : "",
     address: userEdit ? userEdit.address : "",
-    note: userEdit ? userEdit.note : "",
+    note: userEdit ? userEdit.note : [],
   });
 
   const [modalChild, setModalChild] = useState({
@@ -38,33 +38,9 @@ const ModalUser = ({ openModal }) => {
     item: null,
   });
   const [addNote, setAddNote] = useState("");
-
-  const [dataSource, setDataSource] = useState([]);
-
-  const splitNote = (note) => {
-    let result = [];
-    let _splitNote = note.split(",");
-    if (_splitNote.length > 0) {
-      result = _splitNote.map((item, index) => ({
-        key: index,
-        content: item,
-      }));
-      return result;
-    }
-    return result;
-  };
-
-  const renderNote = () => {
-    let result = "";
-    dataSource.forEach((item, index) => {
-      if (index === 0) {
-        result += item.content;
-      } else {
-        result += "," + item.content;
-      }
-    });
-    return result;
-  };
+  const [dataSource, setDataSource] = useState(
+    userEdit ? userEdit.note : user.note
+  );
 
   const columns = [
     {
@@ -84,7 +60,11 @@ const ModalUser = ({ openModal }) => {
                 setModalChild({ open: true, item: record });
               }}
             />
-            <DeleteOutlined />
+            <DeleteOutlined
+              onClick={() => {
+                handleDeleteNote(record);
+              }}
+            />
           </Space>
         );
       },
@@ -103,7 +83,7 @@ const ModalUser = ({ openModal }) => {
         editUser({
           ...user,
           id: userEdit.id,
-          note: splitNote(user.note),
+          note: dataSource,
         })
       );
     } else {
@@ -111,7 +91,6 @@ const ModalUser = ({ openModal }) => {
         addUser({
           user: {
             ...user,
-            note: renderNote(),
           },
           page: allUser.page,
           limit: allUser.limit,
@@ -123,19 +102,40 @@ const ModalUser = ({ openModal }) => {
 
   const handleAddNote = () => {
     if (modalChild.item) {
-      let newDataSource = [...userEdit.note];
-      let index = dataSource.findIndex(
+      let newDataSource = [...dataSource];
+      let index = newDataSource.findIndex(
         (item) => item.key === modalChild.item.key
       );
       if (index !== -1) {
-        newDataSource[index].content = addNote;
+        const _newDataSource = [
+          ...newDataSource.slice(0, index),
+          { key: modalChild.item.key, content: addNote },
+          ...newDataSource.slice(index + 1, newDataSource.length),
+        ];
+
+        setUser({
+          ...user,
+          note: _newDataSource,
+        });
+        setDataSource(_newDataSource);
       }
     } else {
-      setDataSource([...dataSource, { content: addNote }]);
+      setUser({
+        ...user,
+        note: [...user.note, { content: addNote, key: user.note.length + 1 }],
+      });
+      setDataSource([
+        ...user.note,
+        { content: addNote, key: user.note.length + 1 },
+      ]);
+      setAddNote("");
     }
     setModalChild({ open: false, item: null });
   };
 
+  const handleDeleteNote = (note) => {
+    setDataSource([...dataSource].filter((item) => item.key !== note.key));
+  };
   return (
     <>
       <Modal
@@ -216,13 +216,15 @@ const ModalUser = ({ openModal }) => {
                   Add note
                 </Button>
               </Col>
-              <Col lg={18} md={18}>
-                <Table
-                  dataSource={userEdit ? splitNote(userEdit.note) : dataSource}
-                  columns={columns}
-                  pagination={false}
-                />
-              </Col>
+              {dataSource.length > 0 && (
+                <Col lg={18} md={18}>
+                  <Table
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination={false}
+                  />
+                </Col>
+              )}
             </Row>
           </Form.Item>
 

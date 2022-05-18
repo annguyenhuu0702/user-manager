@@ -2,27 +2,50 @@
   "users": [
     {
       "name": "Nguyễn Hữu An",
-      "sex": "Male",
-      "phoneNumber": "0384974745",
-      "address": "quảng trị",
-      "note": "1,2",
-      "id": 1
+      "sex": "Female",
+      "phoneNumber": "0337867708",
+      "address": "Quảng Ngãi",
+      "note": [
+        {
+          "content": "ab",
+          "key": 2
+        }
+      ],
+      "id": 2
     },
     {
-      "name": "Nguyễn Hữu B",
-      "sex": "Female",
-      "phoneNumber": "0965480997",
-      "address": "Nam Định",
-      "note": "a",
-      "id": 2
+      "name": "ao that day",
+      "sex": "Male",
+      "phoneNumber": "0337867708",
+      "address": "Quảng Ngãi",
+      "note": [
+        {
+          "key": 1,
+          "content": "12"
+        },
+        {
+          "content": "123",
+          "key": 2
+        }
+      ],
+      "id": 3
     },
     {
       "name": "học reactJs 1",
       "sex": "Male",
-      "phoneNumber": "0384974723",
+      "phoneNumber": "0337867708",
       "address": "Quảng Ngãi",
-      "note": "1,2,3",
-      "id": 3
+      "note": [
+        {
+          "content": "1",
+          "key": 1
+        },
+        {
+          "content": "2",
+          "key": 2
+        }
+      ],
+      "id": 4
     }
   ]
 }

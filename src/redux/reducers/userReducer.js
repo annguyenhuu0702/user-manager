@@ -49,7 +49,7 @@ const userReducer = (state = initialState, action) => {
       };
 
     case actionType.EDIT_USER:
-      return state;
+      return { ...state };
 
     case actionType.EDIT_USER_SUCCESS:
       const data = action.payload;

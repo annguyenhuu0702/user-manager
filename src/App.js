@@ -15,6 +15,7 @@ import {
   showModal,
 } from "./redux/actions/index";
 import "./__app.scss";
+import { renderNote } from "./utils/index";
 
 function App() {
   const openModal = useSelector((state) => state.modal.openModal);
@@ -38,7 +39,12 @@ function App() {
     let wb = XLSX.utils.book_new();
     // object dùng json_to__sheet
     // mảng dùng sheet_add_aoa
-    let ws = XLSX.utils.json_to_sheet(allUser.items);
+    let ws = XLSX.utils.json_to_sheet(
+      allUser.items.map((item) => ({
+        ...item,
+        note: renderNote(item.note),
+      }))
+    );
     XLSX.utils.book_append_sheet(wb, ws, "listUser");
     XLSX.writeFile(wb, "listUser.xlsx");
   };

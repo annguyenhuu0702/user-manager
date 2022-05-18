@@ -10,6 +10,7 @@ import {
   showModal,
   deleteUser,
 } from "../../redux/actions";
+import { renderNote } from "../../utils";
 
 const UserItem = ({ listUser }) => {
   const dispatch = useDispatch();
@@ -52,6 +53,9 @@ const UserItem = ({ listUser }) => {
       title: "Note",
       dataIndex: "note",
       key: "note",
+      render: (text, record) => {
+        return renderNote(record.note);
+      },
     },
     {
       title: "Action",
